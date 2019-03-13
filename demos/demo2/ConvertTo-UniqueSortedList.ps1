@@ -1,11 +1,17 @@
 function ConvertTo-UniqueSortedList {
     <#
     .SYNOPSIS
-    get a sorted list of unique properties for one or more lists.
+    Get a sorted list of unique properties for one or more lists.
     
     .DESCRIPTION
-    this will return a list of unique properties for one or more lists.
+    This will return a list of unique properties for one or more lists.
     
+    .PARAMETER Lists
+    A list of objects you want to sort.
+
+    .PARAMETER SortProperty
+    The property of the objects in Lists you wish to sort.  The property should be enumarable.
+
     .EXAMPLE
     $list1 += 'a','b','c','d'
     $list2 += 'b','c','d','e'
@@ -25,7 +31,7 @@ function ConvertTo-UniqueSortedList {
     $list = ConvertTo-UniqueSortedList -List $list1, $list2 -SortProperty 'Name'
 
     .NOTES
-    This will only return the sorted unique property if SoftProperty is specified.
+    This will only return the sorted unique property values if SoftProperty is specified.
 
     #>
     [OutputType([psobject[]])]

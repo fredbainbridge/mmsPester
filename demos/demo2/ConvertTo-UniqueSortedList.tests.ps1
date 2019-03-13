@@ -9,7 +9,7 @@ Describe "Create an unique sorted list" {
             $uniqueSortedlist | Should Be 'a','b','c','d','e'  
         }
         
-        It 'Should return a combined, sorted and unique list using a sort property' {
+        It 'Should return a combined, sorted and unique list when specifying SortProperty' {
             $list1 = @(
                 @{Name = 'a'; Value = '1';}, 
                 @{Name = 'b'; Value = '2';},
