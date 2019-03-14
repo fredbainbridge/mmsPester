@@ -46,14 +46,7 @@ function ConvertTo-UniqueSortedList {
     $combinedList = @()
     foreach($list in $lists) {
         foreach($item in $list) {
-            if([string]::IsNullOrEmpty($SortProperty)) {
-                $combinedList += $item
-            }
-            else {
-                if($combinedList.$($SortProperty) -notcontains $item) {
-                    $combinedList += $item
-                }
-            }
+            $combinedList += $item
         }
     }
     $sortedUniqueList = @()
