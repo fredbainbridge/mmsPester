@@ -39,19 +39,19 @@ function ConvertTo-DuplicateSortedList {
     param (
         [Parameter(Mandatory=$true)]
         [AllowEmptyCollection()]
-        [System.Collections.ArrayList]$Lists,
+        [psobject[]]$Lists,
 
         [Parameter(Mandatory=$false)]
         [string]$SortProperty
     )
-    $combinedList = [System.Collections.ArrayList]::new()
+    $combinedList = @()
     foreach($list in $lists) {
         foreach($item in $list) {
             if(![string]::IsNullOrEmpty($SortProperty)) {
-                $null = $combinedList.Add($item.$SortProperty)
+                $combinedList += $item.$SortProperty
             }
             else {
-                $null = $combinedList.Add($item)
+                $combinedList += $item
             }
         }
     }
@@ -59,16 +59,10 @@ function ConvertTo-DuplicateSortedList {
     foreach($item in $combinedList) {
         $counts["$item"] += 1
     }
-    $duplicates = [System.Collections.ArrayList]::new()
-    
     if($counts) {
-        foreach($key in $counts.keys) {
-            if($counts[$key] -gt 1) {
-                $null = $duplicates.Add($key)
-            }
-        }
+        $duplicates = $counts.keys | Where-Object {$counts[$psitem] -gt 1} | Sort-Object
+        if($duplicates) {
+            return $duplicates
+        }        
     }
-    if($duplicates) {
-        return $duplicates | Sort-Object
-    }        
 }
