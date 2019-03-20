@@ -1,10 +1,10 @@
-function ConvertTo-UniqueSortedList {
+function ConvertTo-DuplicateSortedList {
     <#
     .SYNOPSIS
-    Get a sorted list of unique properties for one or more lists.
+    Get a sorted list of duplicate values for one or more lists.
     
     .DESCRIPTION
-    This will return a list of unique properties for one or more lists.
+    This will return a list of duplicate values for one or more lists.
     
     .PARAMETER Lists
     A list of objects you want to sort.
@@ -15,7 +15,7 @@ function ConvertTo-UniqueSortedList {
     .EXAMPLE
     $list1 += 'a','b','c','d'
     $list2 += 'b','c','d','e'
-    $list = ConvertTo-UniqueSortedList -Lists $list1, $list2
+    $list = ConvertTo-DuplicateSortedList -Lists $list1, $list2
 
     .EXAMPLE
     $list1 = @(
@@ -28,16 +28,17 @@ function ConvertTo-UniqueSortedList {
         @{Name = 'e'; Value = '5';},
         @{Name = 'a'; Value = '1';}
     )
-    $list = ConvertTo-UniqueSortedList -List $list1, $list2 -SortProperty 'Name'
+    $list = ConvertTo-DuplicateSortedList -List $list1, $list2 -SortProperty 'Name'
 
     .NOTES
-    This will only return the sorted unique property values if SoftProperty is specified.
+    This will only return the sorted unique property values if SortProperty is specified.
 
     #>
     [OutputType([psobject[]])]
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true)]
+        #[AllowNull()]
         [psobject[]]$Lists,
 
         [Parameter(Mandatory=$false)]
@@ -46,16 +47,22 @@ function ConvertTo-UniqueSortedList {
     $combinedList = @()
     foreach($list in $lists) {
         foreach($item in $list) {
-            $combinedList += $item
+            if(![string]::IsNullOrEmpty($SortProperty)) {
+                $combinedList += $item.$SortProperty
+            }
+            else {
+                $combinedList += $item
+            }
         }
     }
-    $sortedUniqueList = @()
-    if([string]::IsNullOrEmpty($SortProperty)) {
-        $sortedUniqueList = $combinedList | Sort-Object | Get-Unique
+    $counts = @{}
+    foreach($item in $combinedList) {
+        $counts["$item"] += 1
     }
-    else {
-        $sortedUniqueList = $combinedList.$($SortProperty) | Sort-Object | Get-Unique
-        
+    if($counts) {
+        $duplicates = $counts.keys | Where-Object {$counts[$psitem] -gt 1} | Sort-Object
+        if($duplicates) {
+            return $duplicates
+        }        
     }
-    $sortedUniqueList   
 }

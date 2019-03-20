@@ -1,6 +1,6 @@
 Import-Module ..\mmsSortedList -Force
 
-Describe "Create an unique sorted list" {
+Describe "ConvertTo-DuplicateSortedList" {
     InModuleScope -ModuleName mmsSortedList {
         Context -Name "Combining, sorting and returning a list of duplicates" {
             $list1 = 'a','b','c','d'

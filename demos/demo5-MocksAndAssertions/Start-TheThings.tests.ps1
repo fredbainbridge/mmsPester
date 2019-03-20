@@ -1,4 +1,5 @@
-Import-Module .\mmsThings
+Import-Module .\mmsThings -Force
+Import-Module .\mmsSortedList -Force
 Describe 'Working with lists' {
     Context -Name 'Local groups are populated - Using Assert-VerifiableMock' {
         #this is how everyone starts.  This is not great, avoid long mocks.
@@ -47,7 +48,7 @@ Describe 'Working with lists' {
 
         It 'Should Start all the things.' {
             . .\Start-TheThings.ps1
-            Assert-VerifiableMock
+            Assert-VerifiableMocks
         }
 
     }
@@ -110,7 +111,7 @@ Describe 'Working with lists' {
         Mock Get-LocalGroupMember -MockWith { 
 
         } -Verifiable
-        <# Mocking these provide little to no value.
+        #Mocking these provide little to no value.
         #you ensure when you pass in no items you the native function will also return nothing.
         Mock -CommandName 'ConvertTo-UniqueSortedList' -MockWith {
             return @()
