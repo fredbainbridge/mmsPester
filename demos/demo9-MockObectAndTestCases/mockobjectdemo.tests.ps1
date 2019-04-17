@@ -1,9 +1,10 @@
 . .\mockobjectdemo.ps1
+#Import-Module -Name Pester -Version 4.7.2
 Describe 'Mock object' {
     Context "Management Object" {
         mock Get-WmiObject {
             New-MockObject -Type 'System.Management.ManagementObject'
-        } -Verifiable -ParameterFilter { $class -eq 'Win32_Volume' }
+        } -Verifiable -ParameterFilter { $Class -eq 'Win32_Volume' }
         It 'Should return a management object' {
             $volume = Get-WMIVolume
             Assert-MockCalled -CommandName Get-WmiObject
