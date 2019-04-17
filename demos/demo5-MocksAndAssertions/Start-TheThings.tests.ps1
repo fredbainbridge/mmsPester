@@ -1,11 +1,12 @@
 Import-Module .\mmsThings -Force
 Import-Module .\mmsSortedList -Force
+Import-Module c:\source\repos\mmsPester\Pester -Force
 Describe 'Working with lists' {
     Context -Name 'Local groups are populated - Using Assert-VerifiableMock' {
         #this is how everyone starts.  This is not great, avoid long mocks.
         Mock Get-LocalGroupMember -MockWith {
             param([string]$Group)
-            if($Group -eq 'group1') {
+            if ($Group -eq 'group1') {
                 return @(
                     @{
                         Name = 'user1';
@@ -15,7 +16,7 @@ Describe 'Working with lists' {
                     }
                 )
             }
-            if($Group -eq 'group2') {
+            if ($Group -eq 'group2') {
                 return @(
                     @{
                         Name = 'user1';
@@ -31,11 +32,11 @@ Describe 'Working with lists' {
         } -Verifiable
 
         Mock -CommandName 'ConvertTo-UniqueSortedList' -MockWith {
-            return 'a','b','c'
+            return 'a', 'b', 'c'
         } -Verifiable
 
         Mock -CommandName 'ConvertTo-DuplicateSortedList' -MockWith {
-            return 'a','b','c'
+            return 'a', 'b', 'c'
         } -Verifiable
 
         Mock -CommandName 'Start-Something' -MockWith {
@@ -48,7 +49,7 @@ Describe 'Working with lists' {
 
         It 'Should Start all the things.' {
             . .\Start-TheThings.ps1
-            Assert-VerifiableMocks
+            Assert-VerifiableMock
         }
 
     }
@@ -56,7 +57,7 @@ Describe 'Working with lists' {
     Context -Name 'Local groups are populated - Using Assert-MockCalled' {
         Mock Get-LocalGroupMember -MockWith {
             param([string]$Group)
-            if($Group -eq 'group1') {
+            if ($Group -eq 'group1') {
                 return @(
                     @{
                         Name = 'user1';
@@ -66,7 +67,7 @@ Describe 'Working with lists' {
                     }
                 )
             }
-            if($Group -eq 'group2') {
+            if ($Group -eq 'group2') {
                 return @(
                     @{
                         Name = 'user1';
@@ -82,11 +83,11 @@ Describe 'Working with lists' {
         } -Verifiable
 
         Mock -CommandName 'ConvertTo-UniqueSortedList' -MockWith {
-            return 'a','b','c'
+            return 'a', 'b', 'c'
         } -Verifiable
 
         Mock -CommandName 'ConvertTo-DuplicateSortedList' -MockWith {
-            return 'a','b','c'
+            return 'a', 'b', 'c'
         } -Verifiable
 
         Mock -CommandName 'Start-Something' -MockWith {
@@ -142,7 +143,7 @@ Describe 'Working with lists' {
     Context -Name 'One local groups is NOT populated - Using Assert-MockCalled' {
         Mock Get-LocalGroupMember -MockWith { 
             param([string]$Group)
-            if($Group -eq 'group1') {
+            if ($Group -eq 'group1') {
                 return @(
                     @{
                         Name = 'user1';
@@ -152,7 +153,7 @@ Describe 'Working with lists' {
                     }
                 )
             }
-            if($Group -eq 'group2') {
+            if ($Group -eq 'group2') {
                 return @(
                    
                 )

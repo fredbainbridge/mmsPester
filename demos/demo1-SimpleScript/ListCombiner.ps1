@@ -1,5 +1,4 @@
-Install-Module -Name Pester -Scope CurrentUser -SkipPublisherCheck
-Import-Module c:\source\repos\mmsPester\Pester -Force
+
 $list1 = @()
 $list1 += 'a','b','c','d'
 

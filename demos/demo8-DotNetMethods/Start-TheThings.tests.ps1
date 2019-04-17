@@ -1,7 +1,7 @@
 Import-Module .\mmsThings -Force
 Import-Module .\mmsSortedList -Force
 
-function Add-UserToList {}
+function Add-UserToList { }
 Describe 'Working with lists' {
     Context -Name 'Testing Start-TheThings' {
         Mock Get-LocalGroupMember -MockWith {
@@ -49,15 +49,15 @@ Describe 'Working with lists' {
             
         } -Verifiable
 
-        #Mock -CommandName 'Add-UserToList' -MockWith {
+        Mock -CommandName 'Add-UserToList' -MockWith {
 
-        #} -Verifiable
+        } -Verifiable
 
         It 'Should Start all the things.' {
             .\Start-TheThings.ps1 -GroupNames 'group1', 'group2'
-            Assert-MockCalled -CommandName Get-LocalGroupMember -Times 1 -Exactly -ParameterFilter {$Group.Name -eq 'group1'} -Scope It
-            Assert-MockCalled -CommandName Get-LocalGroupMember -Times 1 -Exactly -ParameterFilter {$Group.Name -eq 'group2'} -Scope It
-            #Assert-MockCalled -CommandName Add-UserToList -Times 5 -Exactly -Scope It
+            Assert-MockCalled -CommandName Get-LocalGroupMember -Times 1 -Exactly -ParameterFilter { $Group.Name -eq 'group1' } -Scope It
+            Assert-MockCalled -CommandName Get-LocalGroupMember -Times 1 -Exactly -ParameterFilter { $Group.Name -eq 'group2' } -Scope It
+            Assert-MockCalled -CommandName Add-UserToList -Times 5 -Exactly -Scope It
             Assert-MockCalled -CommandName Start-Something -Times 1 -Exactly -Scope It
             Assert-MockCalled -CommandName Start-SomethingElse -Times 1 -Exactly -Scope It
         }

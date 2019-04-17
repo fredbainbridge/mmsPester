@@ -13,7 +13,7 @@ if($uniqueNames.Count -gt 0) {
 }
 
 
-#find duplicate user namess both groups.
+#find duplicate user names both groups.
 $duplicateNames = ConvertTo-DuplicateSortedList -Lists $group1Members, $group2Members -SortProperty Name
 if($duplicateNames.Count -gt 0) {
     Start-SomethingElse -InputObject $duplicateNames
