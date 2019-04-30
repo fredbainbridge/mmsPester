@@ -2,7 +2,7 @@ function ConvertTo-DuplicateSortedList {
     <#
     .SYNOPSIS
     Get a sorted list of duplicate values for one or more lists.
-    
+
     .DESCRIPTION
     This will return a list of duplicate values for one or more lists.
     
@@ -37,17 +37,17 @@ function ConvertTo-DuplicateSortedList {
     [OutputType([psobject[]])]
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         #[AllowNull()]
         [psobject[]]$Lists,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [string]$SortProperty
     )
     $combinedList = @()
-    foreach($list in $lists) {
-        foreach($item in $list) {
-            if(![string]::IsNullOrEmpty($SortProperty)) {
+    foreach ($list in $lists) {
+        foreach ($item in $list) {
+            if (![string]::IsNullOrEmpty($SortProperty)) {
                 $combinedList += $item.$SortProperty
             }
             else {
@@ -55,14 +55,14 @@ function ConvertTo-DuplicateSortedList {
             }
         }
     }
-    $counts = @{}
-    foreach($item in $combinedList) {
+    $counts = @{ }
+    foreach ($item in $combinedList) {
         $counts["$item"] += 1
     }
-    if($counts) {
-        $duplicates = $counts.keys | Where-Object {$counts[$psitem] -gt 1} | Sort-Object
-        if($duplicates) {
+    if ($counts) {
+        $duplicates = $counts.keys | Where-Object { $counts[$psitem] -gt 1 } | Sort-Object
+        if ($duplicates) {
             return $duplicates
-        }        
+        }
     }
 }

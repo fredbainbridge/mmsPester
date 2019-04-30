@@ -14,7 +14,7 @@ Describe 'Working with lists' {
                 }
             )
         } -Verifiable -ParameterFilter { $Group.Name -eq 'group1' }
-        
+
         Mock Get-LocalGroupMember -MockWith {
             return @(
                 @{
@@ -40,13 +40,13 @@ Describe 'Working with lists' {
         Mock Get-LocalGroupMember -MockWith {
 
         }  -Verifiable -ParameterFilter { $Group.Name -eq 'group4' }
-        
+
         Mock -CommandName 'Start-Something' -MockWith {
 
         } -Verifiable
 
         Mock -CommandName 'Start-SomethingElse' -MockWith {
-            
+
         } -Verifiable
 
         Mock -CommandName 'Add-UserToList' -MockWith {

@@ -19,12 +19,12 @@ function ConvertTo-DuplicateSortedList {
 
     .EXAMPLE
     $list1 = @(
-        @{Name = 'a'; Value = '1';}, 
+        @{Name = 'a'; Value = '1';},
         @{Name = 'b'; Value = '2';},
         @{Name = 'c'; Value = '3';}
     )
     $list2 = @(
-        @{Name = 'd'; Value = '4';}, 
+        @{Name = 'd'; Value = '4';},
         @{Name = 'e'; Value = '5';},
         @{Name = 'a'; Value = '1';}
     )
@@ -37,17 +37,17 @@ function ConvertTo-DuplicateSortedList {
     [OutputType([psobject[]])]
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [AllowEmptyCollection()]
         [psobject[]]$Lists,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [string]$SortProperty
     )
     $combinedList = @()
-    foreach($list in $lists) {
-        foreach($item in $list) {
-            if(![string]::IsNullOrEmpty($SortProperty)) {
+    foreach ($list in $lists) {
+        foreach ($item in $list) {
+            if (![string]::IsNullOrEmpty($SortProperty)) {
                 $combinedList += $item.$SortProperty
             }
             else {
@@ -55,14 +55,14 @@ function ConvertTo-DuplicateSortedList {
             }
         }
     }
-    $counts = @{}
-    foreach($item in $combinedList) {
+    $counts = @{ }
+    foreach ($item in $combinedList) {
         $counts["$item"] += 1
     }
-    if($counts) {
-        $duplicates = $counts.keys | Where-Object {$counts[$psitem] -gt 1} | Sort-Object
-        if($duplicates) {
+    if ($counts) {
+        $duplicates = $counts.keys | Where-Object { $counts[$psitem] -gt 1 } | Sort-Object
+        if ($duplicates) {
             return $duplicates
-        }        
+        }
     }
 }

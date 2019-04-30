@@ -2,7 +2,7 @@ function ConvertTo-UniqueSortedList {
     <#
     .SYNOPSIS
     Get a sorted list of unique properties for one or more lists.
-    
+
     .DESCRIPTION
     This will return a list of unique properties for one or more lists.
     
@@ -37,26 +37,25 @@ function ConvertTo-UniqueSortedList {
     [OutputType([psobject[]])]
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [AllowEmptyCollection()]
         [psobject[]]$Lists,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [string]$SortProperty
     )
     $combinedList = @()
-    foreach($list in $lists) {
-        foreach($item in $list) {
+    foreach ($list in $lists) {
+        foreach ($item in $list) {
             $combinedList += $item
         }
     }
     $sortedUniqueList = @()
-    if([string]::IsNullOrEmpty($SortProperty)) {
+    if ([string]::IsNullOrEmpty($SortProperty)) {
         $sortedUniqueList = $combinedList | Sort-Object | Get-Unique
     }
     else {
         $sortedUniqueList = $combinedList.$($SortProperty) | Sort-Object | Get-Unique
-        
     }
-    $sortedUniqueList   
+    $sortedUniqueList
 }

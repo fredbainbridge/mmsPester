@@ -109,7 +109,7 @@ Describe 'Working with lists' {
     }
 
     Context -Name 'Both local groups are NOT populated - Using Assert-MockCalled' {
-        Mock Get-LocalGroupMember -MockWith { 
+        Mock Get-LocalGroupMember -MockWith {
 
         } -Verifiable
         #Mocking these provide little to no value.
@@ -165,7 +165,7 @@ Describe 'Working with lists' {
         } -Verifiable
 
         Mock -CommandName 'Start-SomethingElse' -MockWith {
-            
+
         } -Verifiable
 
         It 'Should not start all the things.' {
