@@ -41,7 +41,7 @@ Describe 'Working with lists' {
             . .\Start-TheThings.ps1
             Assert-MockCalled -CommandName Get-LocalGroupMember -Times 1 -Exactly -ParameterFilter { $Group.Name -eq 'group1' }
             Assert-MockCalled -CommandName Get-LocalGroupMember -Times 1 -Exactly -ParameterFilter { $Group.Name -eq 'group2' }
-            Assert-VerifiableMocks
+            Assert-VerifiableMock
         }
 
         It 'Should not Start-SomethingElse if there are no duplicates.' {

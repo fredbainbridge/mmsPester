@@ -55,7 +55,6 @@ function ConvertTo-UniqueSortedList {
     }
     else {
         $sortedUniqueList = $combinedList.$($SortProperty) | Sort-Object | Get-Unique
-        
     }
     $sortedUniqueList
 }
